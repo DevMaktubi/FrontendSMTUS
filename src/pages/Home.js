@@ -4,7 +4,6 @@ import {Map, GoogleApiWrapper, InfoWindow, Marker} from 'google-maps-react';
 import {InfoBox, WarningMessage} from './styles';
 
 import Header from '../components/Header';
-import Aside from '../components/Aside';
 
 import Hospital from '../assets/hospital.png'
 
@@ -23,8 +22,11 @@ class Home extends React.Component {
 
 
   async componentDidMount(){
+    console.log('before')
     const response = await api.get('hospital')
+    console.log('after')
     const data = response.data;
+    
     this.setState({markers: data})
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -89,8 +91,18 @@ class Home extends React.Component {
     if(!this.state.gotPos){
       return(
         <WarningMessage>
-          <h1>Você deve permitir as suas coordenadas para que a plataforma funcione.</h1>
-          <p>Estamos Aguardando...</p>
+          <h1>Carregando</h1>
+          <div class="lds-roller">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+          <p>(Certifique-se de que você permitiu acesso à sua localização.)</p>
         </WarningMessage>
       )
     }else{

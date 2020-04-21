@@ -11,12 +11,17 @@ export default class Contato extends React.Component {
   }
   async componentDidMount(){
     const cnpj = localStorage.getItem('cnpj')
-    const response = await api.get('responsavelTecnico', {
-      headers: {
-        cnpj
-      }
-    })
-    this.setState({dadosResponsavel: response.data[0]})
+    try {
+      const response = await api.get('responsavelTecnico', {
+        headers: {
+          cnpj
+        }
+      })
+      this.setState({dadosResponsavel: response.data[0]})
+      console.log("Data: " + response.data)
+    }catch(e){
+      console.log("erro:" + e);
+    }
 
     const responsedois = await api.get('horariofuncionamentoId', {
       headers: {
